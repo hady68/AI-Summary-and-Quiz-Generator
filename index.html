@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Text Summarizer</title>
+  </head>
+  <body>
+    <h1>Text Summarizer</h1>
+    <textarea id="input-text" rows="10" cols="50"></textarea>
+    <button id="submit-btn" onclick="generateSummary()">Submit</button>
+    <h2>Summarized Text:</h2>
+    <textarea id="summary-text" rows="10" cols="50" readonly></textarea>
+
+    <script>
+      function generateSummary() {
+  
+      var inputText = document.getElementById("input-text").value;
+
+      var xhr = new XMLHttpRequest();
+
+      // Set up the request
+      xhr.open("POST", "/process-text", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      // Define the request payload
+      var payload = {
+        text: inputText
+      };
+
+      // Convert the payload to JSON string
+      var payloadJson = JSON.stringify(payload);
+
+      // Set up the event handler for when the response is received
+      xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    var response = JSON.parse(xhr.responseText);
+    var summary = response.summary; // Get the 'summary' property from the response object
+
+    var summaryTextArea = document.getElementById("summary-text");
+    summaryTextArea.value = summary;
+  }
+};
+
+      // Send the request
+      xhr.send(payloadJson);
+      }
+    </script>
+  </body>
+</html>
