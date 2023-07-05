@@ -1,0 +1,149 @@
+/* style.css */
+
+/* Reset default margin and padding */
+body, h1, p {
+  margin: 25px;
+  padding: 0;
+  color: #000000;
+}
+
+/* Set background and text color for the page */
+body {
+  background-color: #ff961e;
+  color: #333;
+  font-family: 'Satoshi', sans-serif;
+}
+
+/* Center align the h1 */
+h1 {
+  margin-top: 5px;
+  font-size: 60px;
+  font-weight:800;
+  line-height: 1.15;
+  color: #000;
+  text-align: center;
+}
+
+/* Style the tab content */
+#tab-content-container {
+display: flex;
+justify-content: space-evenly;
+}
+
+/* Style the tab buttons */
+.tab-button {
+  border: none;
+  background-color: #5fd4ff;
+  color: #000000;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.tab-button:hover {
+  background-color: #ffd000;
+}
+
+.tab-button.active {
+  background-color: #0821ff;
+}
+
+
+.tab-content {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  max-width: 500px;
+  height: auto;
+}
+
+/* Show the active tab content */
+.tab-content.active {
+  display: block;
+}
+
+#simple-container{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+
+#expert-container{
+  display: flex;
+  flex-direction: column;
+}
+/* make the initail code display hidden */
+#simplecontent{
+  
+  display: none;
+  border-radius: 10px;
+  max-width: 500px;
+
+
+}
+#expertcontent{
+  border-radius: 10px;
+  display: none;
+
+}
+
+
+#upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+#input-text {
+  width: 60%;
+  height: 250px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+#upload-button {
+  border: none;
+  background-color: #00bbff;
+  color: #000000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+#upload-button:hover {
+  background-color: #ffd000;
+  margin: 5px;
+}
+
+
+.blinking-cursor {
+  margin-left: 5px;
+  background-color: #7d7a7a;
+  animation: blink 1s infinite;
+}
+
+#tab-area{
+  display: none;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  50.1%, 100% {
+    opacity: 0;
+  }
+}

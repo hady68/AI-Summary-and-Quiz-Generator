@@ -1,0 +1,22 @@
+-> Git is a version control system for tracking changes in computer files.
+-> Git was created in 2005 by Linus Torvalds, the creator of Linux.
+-> Git is a distributed version control system, which means multiple developers can work on a single project without being on the same network.
+-> Git stores every version and change made to a project, allowing developers to revert back to specific versions at any time.
+-> Git repositories can be local or remote, and changes made in a local repository can be pushed to a remote repository like GitHub or Bitbucket.
+-> Git keeps track of code history with snapshots of files, allowing developers to go back and see previously written code.
+-> Code changes in Git can be staged before committing, using the "git add" command.
+-> "git status" displays the differences between the working tree and the staging area.
+-> Git commits can be made using the "git commit" command, which takes the files in the staging area and puts them into the local repository.
+-> Remote repositories can be accessed using commands like "git push" to upload local changes to a remote repository, and "git pull" to download the latest changes from a remote repository.
+-> Git branches can be used to work on different versions of a project simultaneously, and changes made in a branch can be merged into the main branch using the "git merge" command.
+=========================================================================================================================
+
+Expert Summary:
+
+Git is a version control system used for tracking changes in computer files. It was created by Linus Torvalds in 2005 and is widely used by developers for managing code. Git is a distributed version control system, allowing multiple developers to work on a project without being on the same network.
+It tracks every version and change made to a project, providing the ability to revert back to specific versions of files. Git can be used with any language or framework and is commonly used for projects ranging from static HTML websites to complex applications. 
+It uses repositories to store files and changes can be made in a local repository before being pushed to a remote repository such as GitHub or Bitbucket. Git keeps track of code history with snapshots of files, allowing developers to go back and see previously written code. 
+Developers can put changes in a staging area before committing them to the repository, ensuring code is kept safe. 
+Git also provides commands to create branches, allowing developers to work on different versions of a project simultaneously. Changes made in a branch can be merged into the main branch using the "git merge" command.
+Git is easy to install on different operating systems, and there are graphical tools available, but it is recommended to use the command line interface to learn how Git works under the hood.
+Git is a powerful tool for managing code and collaboration, making it an essential skill for developers.

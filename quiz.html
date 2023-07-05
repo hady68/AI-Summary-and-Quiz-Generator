@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+   <!-- satoshi font family -->
+   <link
+   href="https://api.fontshare.com/v2/css?f[]=satoshi@1,900,700,500,300,400&display=swap"
+   rel="stylesheet"
+   />
+   <!-- inter font family -->
+   <link
+   href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+   rel="stylesheet"
+   />
+  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+</head>
+<body>
+  <h1>Quiz generator</h1>
+
+  <div id="upload-container">
+    <textarea id="input-text" placeholder="Enter your text here......"></textarea>
+    <button id="upload-button" onclick="generateQuiz()">Quiz AI</button>
+  </div>
+
+  <div id="loading-message">Waiting for your input...</div>
+
+  <div  id ="tab-area"class="tab">
+    <div id="tab-content-container">
+      <div id="quiz-container">
+        <button class="tab-button" id="quiz-btn" value="OFF" onclick="togglequizContent()">Attempt Quiz</button> 
+            <div id="quizcontent" class="tab-content">
+            <div id="typewriter">
+              <p id="quiz-para"></p>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</body>
+<style>
+  /* style.css */
+
+/* Reset default margin and padding */
+body, h1, p {
+  margin: 25px;
+  padding: 0;
+  color: #000000;
+}
+
+/* Set background and text color for the page */
+body {
+  background-color: #ff961e;
+  color: #333;
+  font-family: 'Satoshi', sans-serif;
+}
+
+/* Center align the h1 */
+h1 {
+  margin-top: 5px;
+  font-size: 60px;
+  font-weight:800;
+  line-height: 1.15;
+  color: #000;
+  text-align: center;
+}
+
+/* Style the tab content */
+#tab-content-container {
+display: flex;
+justify-content: space-evenly;
+}
+
+/* Style the tab buttons */
+.tab-button {
+  border: none;
+  background-color: #5fd4ff;
+  color: #000000;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.tab-button:hover {
+  background-color: #ffd000;
+}
+
+.tab-button.active {
+  background-color: #0821ff;
+}
+
+
+.tab-content {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  max-width: 500px;
+  height: auto;
+}
+
+/* Show the active tab content */
+.tab-content.active {
+  display: block;
+}
+
+#quiz-container{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+/* make the initail code display hidden */
+#quizcontent{
+  
+  display: none;
+  border-radius: 10px;
+  max-width: 500px;
+
+
+}
+
+
+#upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+#input-text {
+  width: 60%;
+  height: 250px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+#upload-button {
+  border: none;
+  background-color: #00bbff;
+  color: #000000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+#upload-button:hover {
+  background-color: #ffd000;
+  margin: 5px;
+}
+
+
+.blinking-cursor {
+  margin-left: 5px;
+  background-color: #7d7a7a;
+  animation: blink 1s infinite;
+}
+
+#tab-area{
+  display: none;
+}
+#loading-message {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  color: #000000;
+
+}
+
+</style>
+<script>
+  // Get the button and content elements
+let quizBtn = document.getElementById("quiz-btn");
+let quizcontent = document.getElementById("quizcontent");
+let uploadBtn = document.getElementById("upload-button")
+let tabArea = document.getElementById("tab-area")
+const typewriter = document.getElementById('typewriter');
+const quizpara = document.getElementById("quiz-para");
+
+const text = quizpara.textContent;
+let inputText = String;
+ 
+function generateQuiz() {
+
+  var loadingMessage = document.getElementById("loading-message");
+  var inputText = document.getElementById("input-text").value;
+ // Array of loading messages
+    var loadingMessages = [
+    "Preparing the quiz... 📝",
+    "Gathering questions... ❓",
+    "Analyzing the subject matter... 🧠",
+    "Creating engaging quiz content... ✍️",
+    "Organizing questions and options... 🗂️",
+    "Validating quiz structure... ✅",
+    "Adding difficulty levels... ⭐️",
+    "Reviewing quiz coherence... 👀",
+    "Formatting quiz layout... 🎨",
+    "Testing quiz functionality... 🧪",
+    "Refining quiz accuracy... ✔️",
+    "Adding final touches... 🖌️",
+    "Your quiz is ready!... 🎉"
+    ];
+
+  // Function to update the loading message with a delayed effect
+  function updateLoadingMessage(index) {
+    loadingMessage.textContent = loadingMessages[index];
+
+    // Increment the index
+    index++;
+
+    if (index < loadingMessages.length) {
+      // Call the function recursively after the delay
+      setTimeout(function() {
+        updateLoadingMessage(index);
+      }, 1000);
+    } else {
+      // Hide loading message and show tab area
+      loadingMessage.style.display = "none";
+      tabArea.style.display = "block";
+    }
+  }
+
+  // Start updating the loading message
+  updateLoadingMessage(0);
+
+
+
+  var xhr = new XMLHttpRequest();
+
+      // Set up the request
+      xhr.open("POST", "/quiz-text", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      // Define the request payload
+      var payload = {
+        text: inputText
+      };
+
+      // Convert the payload to JSON string
+      var payloadJson = JSON.stringify(payload);
+
+      // Set up the event handler for when the response is received
+      xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+
+    var response = JSON.parse(xhr.responseText);
+    var quiz = response.quiz; // Get the 'summary' property from the response object
+    
+    var quizcontent = document.getElementById("quizcontent");
+    var paragraph = document.getElementById("quiz-para"); // Get the existing paragraph element
+
+
+// Create an introductory message
+const questions = quiz.split("?");
+
+for (let i = 0; i < questions.length - 1; i++) {
+  const question = questions[i].trim();
+  const options = question.split("\n").slice(1);
+
+  // Display the question
+  const questionHeader = document.createElement("h4");
+  questionHeader.textContent = question;
+  paragraph.appendChild(questionHeader);
+
+  // Display the options
+  options.forEach(option => {
+    const optionValue = option.trim().slice(0, 1); // Extract the option value (a, b, c, d)
+    const optionText = option.trim().slice(2); // Extract the option text
+
+    // Create a label element
+    const label = document.createElement("label");
+
+    // Create a radio button element
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = `question_${i + 1}`;
+    radio.value = optionValue;
+
+    // Create a span element for the option label (a), b), c), etc.)
+    const optionLabelSpan = document.createElement("span");
+    optionLabelSpan.textContent = optionValue + ")"; // Display a, b, c, d, etc.
+
+    // Append the option label span, radio button, and option text to the label element
+    label.appendChild(optionLabelSpan);
+    label.appendChild(radio);
+    label.appendChild(document.createTextNode(optionText));
+
+    const lineBreak = document.createElement("br");
+
+    // Append the label, line break, and option text to the paragraph element
+    paragraph.appendChild(label);
+    paragraph.appendChild(lineBreak);
+  });
+
+  // Create a line break element after each question
+  const questionBreak = document.createElement("br");
+  paragraph.appendChild(questionBreak);
+
+
+// Display the quiz response
+// paragraph.innerHTML += question;
+}
+
+};
+};
+      // Send the request
+      xhr.send(payloadJson);
+  
+}
+
+
+window.addEventListener("load",()=>{
+  
+  function togglequizContent() {
+    if(quizBtn.value == "OFF"){
+      quizcontent.style.display = "block";
+      quizBtn.value = "ON";
+    }
+    else if  (quizBtn.value == "ON")
+    {
+      quizcontent.style.display = "none";
+      quizBtn.value = "OFF";
+    }
+  }
+  
+  // Function to toggle the display of the expert content
+  
+  quizBtn.addEventListener("click", togglequizContent);
+  uploadBtn.addEventListener("click",generateQuiz);
+  
+  
+})
+
+
+
+</script>
+
+</html>

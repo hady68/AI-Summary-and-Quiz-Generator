@@ -24,7 +24,7 @@
     <button id="upload-button" onclick="generateSummary()">Generate</button>
   </div>
 
-  <div id="loading-message">Waiting for your input...</div>
+  <div id="loading-message">Loading...</div>
 
   <div  id ="tab-area"class="tab">
     <div id="tab-content-container">
@@ -81,6 +81,10 @@ display: flex;
 justify-content: space-evenly;
 }
 
+#tab-area{
+    display: none;
+}
+
 /* Style the tab buttons */
 .tab-button {
   border: none;
@@ -122,7 +126,6 @@ justify-content: space-evenly;
   flex-direction: column;
   
 }
-
 
 #expert-container{
   display: flex;
@@ -180,15 +183,6 @@ justify-content: space-evenly;
 }
 
 
-.blinking-cursor {
-  margin-left: 5px;
-  background-color: #7d7a7a;
-  animation: blink 1s infinite;
-}
-
-#tab-area{
-  display: none;
-}
 #loading-message {
   text-align: center;
   font-size: 30px;
@@ -215,25 +209,19 @@ const text = gitSummary.textContent;
 let inputText = String;
  
 function generateSummary() {
+var loadingMessage = document.getElementById("loading-message");
 
-  var loadingMessage = document.getElementById("loading-message");
-  var inputText = document.getElementById("input-text").value;
+var inputText = document.getElementById("input-text").value;
+
+
+
  // Array of loading messages
  var loadingMessages = [
- "Initializing... 🚀",
-    "Loading Resources... ⚙️",
-    "Generating a magical summary for you ✨",
-    "Setting up the environment...🏞️",
-    "Doing the Hidden API work...🕵️",
-    "Verifying data integrity...✅",
-    "Cross-checking references...📚",
-    "Verifying accuracy...✔️",
-    "Double-checking calculations...🧮",
-    "Adding finishing touches...🖌️",
-    "Testing functionality...🧪",
-    "Reviewing the results...👀",
-    "Validating inputs...📝",
-    "Here you go!...🎉"
+    "Loading Resources....",
+    "Generating a magical summary for you",
+    "Generating the expert summary now...",
+    "Almost ready!",
+    "Here you go",
   ];
 
   // Function to update the loading message with a delayed effect
@@ -247,7 +235,7 @@ function generateSummary() {
       // Call the function recursively after the delay
       setTimeout(function() {
         updateLoadingMessage(index);
-      }, 1000);
+      }, 5000);
     } else {
       // Hide loading message and show tab area
       loadingMessage.style.display = "none";
@@ -257,8 +245,6 @@ function generateSummary() {
 
   // Start updating the loading message
   updateLoadingMessage(0);
-
-
 
   var xhr = new XMLHttpRequest();
 
@@ -302,10 +288,6 @@ function generateSummary() {
      // Replace full stops with full stops followed by bullet points
     partialSummary = partialSummary.replace(/\./g, '.<br>->');
 
-    // // Update the text content of the paragraph
-    // paragraph.textContent = partialSummary;
-
-    
   // Update the text content of the paragraph with bullet points
   paragraph.innerHTML = 'Simple Summary: <br>' + partialSummary;
 
@@ -382,24 +364,8 @@ window.addEventListener("load",()=>{
   simpleBtn.addEventListener("click", toggleSimpleContent);
   expertBtn.addEventListener("click", toggleExpertContent);
   uploadBtn.addEventListener("click",generateSummary);
-  
-  // let index = 0;
-  // function type() {
-  //   if (index < text.length) {
-  //     typewriter.innerHTML = text.slice(0, index) + '<span class="blinking-cursor">|</span>';
-  //     index++;
-  //     setTimeout(type, Math.random() * 100 +20 );
-  //   } else {
-  //     typewriter.innerHTML = text.slice(0, index) + '<span class="blinking-cursor">|</span>';
-  //   }
-  // }
-  // // start typing
-  // type();
-  
-  
-})
 
-// export { inputText };
+})
 
 </script>
 
