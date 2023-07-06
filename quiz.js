@@ -24,11 +24,12 @@ app.post("/quiz-text", async(req, res) => {
 //   // Perform your desired operation on the received text
 const completion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo-16k",
-    messages: [{"role": "system", "content": "You are a helpful assistant."}, {role: "user", 
+    messages: [{role: "user", 
     content: ` for the given content do the following : 
-    Act as a quiz master who will be generating a 5 question mcq quiz based on the content provided, Make the quiz such that a novice learner who is learning the concept for the first time understand.
+    Act as a quiz master who will be generating a 5 unique question mcq quiz based on the content provided, 
+    Make the quiz such that each qustion is more difficult than the last one.
     Add radio for each question an insure to add a "?" after each question.
-    In the quiz make sure that the whole context of the content is intact.
+    Start the output directly with the question nothing before that.
     ${text}`
   }],
 });
