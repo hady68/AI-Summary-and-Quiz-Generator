@@ -21,7 +21,7 @@
 
   <div id="upload-container">
     <textarea id="input-text" placeholder="Enter your text here......"></textarea>
-    <button id="upload-button" onclick="generateSummary()">Generate</button>
+    <button id="upload-button" onclick="generateExplaination()">Generate Explaination</button>
   </div>
 
   <div id="loading-message">Waiting for your input...</div>
@@ -29,25 +29,21 @@
   <div  id ="tab-area"class="tab">
     <div id="tab-content-container">
       <div id="simple-container">
-        <button class="tab-button" id="simple-btn" value="OFF" onclick="toggleSimpleContent()">Simple Summary AI</button> 
+        <button class="tab-button" id="simple-btn" value="OFF" onclick="toggleSimpleContent()">See Explaination</button> 
         
           <div id="simplecontent" class="tab-content">
             <div id="typewriter">
-              <p id="git-summary"></p>
+              <p id="simplesummary"></p>
             </div>
           </div>
         
       </div>
-      
-      <div id ="expert-container">
-        <button class="tab-button" id="expert-btn" value="OFF" onclick="toggleExpertContent()">Expert Summary AI</button>
-        <div id="expertcontent" class="tab-content">
-          <p id="expertsummary"></p>
-        </div>
-      </div>
     </div>
   </div>
+
 </body>
+
+
 <style>
   /* style.css */
 
@@ -124,10 +120,6 @@ justify-content: space-evenly;
 }
 
 
-#expert-container{
-  display: flex;
-  flex-direction: column;
-}
 /* make the initail code display hidden */
 #simplecontent{
   
@@ -135,11 +127,6 @@ justify-content: space-evenly;
   border-radius: 10px;
   max-width: 500px;
 
-
-}
-#expertcontent{
-  border-radius: 10px;
-  display: none;
 
 }
 
@@ -198,23 +185,21 @@ justify-content: space-evenly;
   color: #000000;
 
 }
-
 </style>
+
+
 <script>
   // Get the button and content elements
 let simpleBtn = document.getElementById("simple-btn");
 let simplecontent = document.getElementById("simplecontent");
-let expertBtn = document.getElementById("expert-btn");
 let uploadBtn = document.getElementById("upload-button")
-let expertcontent = document.getElementById("expertcontent");
 let tabArea = document.getElementById("tab-area")
 const typewriter = document.getElementById('typewriter');
-const gitSummary = document.getElementById("git-summary");
-
-const text = gitSummary.textContent;
+const simpleSummary = document.getElementById("simplesummary");
+const text = simpleSummary.textContent;
 let inputText = String;
  
-function generateSummary() {
+function generateExplaination() {
 
   var loadingMessage = document.getElementById("loading-message");
   var inputText = document.getElementById("input-text").value;
@@ -259,11 +244,10 @@ function generateSummary() {
   updateLoadingMessage(0);
 
 
-
   var xhr = new XMLHttpRequest();
 
       // Set up the request
-      xhr.open("POST", "/process-text", true);
+      xhr.open("POST", "/explain-text", true);
       xhr.setRequestHeader("Content-Type", "application/json");
 
       // Define the request payload
@@ -278,36 +262,21 @@ function generateSummary() {
       xhr.onreadystatechange = function () {
   if (xhr.readyState === 4 && xhr.status === 200) {
     var response = JSON.parse(xhr.responseText);
-    var summary = response.summary; // Get the 'summary' property from the response object
-    var expertsummary = response.expertsummary; // Get the expert property from response
+    var explaination = response.explaination; 
+    
 
 
     var summaryTextArea = document.getElementById("simplecontent");
-    var paragraph = document.getElementById("git-summary"); // Get the existing paragraph element
-
-      // Display otherValue in 'expertcontent' div
-  var expertTextArea = document.getElementById("expertcontent");
-  var expertparagraph = document.getElementById("expertsummary"); // Get the existing paragraph element
-  
+    var paragraph = document.getElementById("simplesummary"); // Get the existing paragraph element
 
   var indexSummary = 0; // Current index of the summary text
   var indexExpertSummary = 0; // Current index of the expertsummary text
   var delay = 20; // Delay between each character (adjust as needed)
 
   // Function to update the text content with a delayed effect
-  function updateSummaryText() {
-    // Get a portion of the summary text based on the current index
-    var partialSummary = summary.substring(0, indexSummary);
-
-     // Replace full stops with full stops followed by bullet points
-    partialSummary = partialSummary.replace(/\./g, '.<br>->');
-
-    // // Update the text content of the paragraph
-    // paragraph.textContent = partialSummary;
-
-    
+  function updateSummaryText() {  
   // Update the text content of the paragraph with bullet points
-  paragraph.innerHTML = 'Simple Summary: <br>' + partialSummary;
+  paragraph.innerHTML = explaination;
 
     // Increment the index
     indexSummary++;
@@ -318,35 +287,10 @@ function generateSummary() {
       setTimeout(updateSummaryText, delay);
     }
   }
-
-  // Function to update the expertsummary text content with a delayed effect
-  function updateExpertSummaryText() {
-    // Get a portion of the expertsummary text based on the current index
-    var partialExpertSummary = expertsummary.substring(0, indexExpertSummary);
-
-    // Update the text content of the expertparagraph
-    expertparagraph.textContent = partialExpertSummary;
-
-    // Increment the index
-    indexExpertSummary++;
-
-    // Check if there are more characters to update
-    if (indexExpertSummary <= expertsummary.length) {
-      // Call the function recursively after the delay
-      setTimeout(updateExpertSummaryText, delay);
-    }
-  }
-
-  // Start updating the summary text content with a delayed effect
+// Start updating the summary text content with a delayed effect
   updateSummaryText();
-
-  // Start updating the expertsummary text content with a delayed effect
-  updateExpertSummaryText();
 }
 };
-
-
-
       // Send the request
       xhr.send(payloadJson);
   
@@ -367,22 +311,10 @@ window.addEventListener("load",()=>{
     }
   }
   
-  // Function to toggle the display of the expert content
-  function toggleExpertContent() {
-    if (expertBtn.value == "OFF") {
-      expertcontent.style.display = "block";
-      expertBtn.value = "ON";
-    }
-    else if (expertBtn.value == "ON") {
-      expertcontent.style.display = "none";
-      expertBtn.value = "OFF";
-    }
-  }
   
   simpleBtn.addEventListener("click", toggleSimpleContent);
-  expertBtn.addEventListener("click", toggleExpertContent);
-  // uploadBtn.addEventListener("click",generateSummary);
-  
+
+  // uploadBtn.addEventListener("click",generateExplaination);
   
 })
 
